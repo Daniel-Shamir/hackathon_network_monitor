@@ -23,7 +23,7 @@ def handle_tcp(thread_num, server_ip, server_tcp_port, file_size):
     stats.tcp_start_connection(file_size)
 
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     tcp_socket.connect((server_ip, server_tcp_port))
     tcp_socket.send(f"{file_size}\n".encode())
 
@@ -92,7 +92,7 @@ def handle_udp(thread_num, server_ip, server_udp_port, file_size):
 
 def listen_for_offers():
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     udp_socket.bind(("0.0.0.0", listen_udp_port))
     print(f"{CLIENT} started, listening for offer requests...")
 
